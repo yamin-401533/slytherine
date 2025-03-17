@@ -1,0 +1,402 @@
+/*---------------------------- Fan Creations Professional Styling ----------------------------*/
+
+/* Section Base */
+#fan-creations {
+  padding: 7rem 0;
+  background: linear-gradient(135deg,
+    rgba(25, 26, 43, 1) 0%,
+    rgba(43, 43, 76, 1) 40%,
+    rgba(91, 64, 124, 0.9) 70%,
+    rgba(143, 88, 173, 0.85) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle floating particles effect */
+#fan-creations::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 2%),
+    radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 3%),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 2%),
+    radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 3%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fan-creations-block .container {
+  position: relative;
+  z-index: 1;
+  max-width: 1259px;
+}
+
+/* Section Title Styling */
+.fan-creations-block .title-holder {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.fan-creations-block .title-holder h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.025em;
+  position: relative;
+  display: inline-block;
+}
+
+.fan-creations-block .title-holder h1::after {
+  content: "";
+  position: absolute;
+  bottom: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(143, 88, 173, 0), rgba(143, 88, 173, 1), rgba(143, 88, 173, 0));
+  border-radius: 2px;
+}
+
+.fan-creations-block .title-holder .subtitle {
+  font-size: 1.175rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Navigation Pills - Consistent Button Styling */
+.fan-creations-block .nav-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.fan-creations-block .nav-pills .nav-item {
+  margin: 0;
+}
+
+.fan-creations-block .nav-pills .nav-link {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(76, 58, 117, 0.4);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(143, 88, 173, 0.2);
+  transition: all 0.25s ease-out;
+  display: flex;
+  align-items: center;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.fan-creations-block .nav-pills .nav-link:hover {
+  background: rgba(91, 64, 124, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.fan-creations-block .nav-pills .nav-link.active {
+  background: linear-gradient(135deg, rgba(143, 88, 173, 0.85), rgba(91, 64, 124, 0.85));
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(143, 88, 173, 0.3), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+}
+
+.fan-creations-block .nav-pills .nav-link svg {
+  margin-right: 0.5rem;
+  transition: transform 0.25s ease;
+}
+
+.fan-creations-block .nav-pills .nav-link:hover svg,
+.fan-creations-block .nav-pills .nav-link.active svg {
+  transform: scale(1.15);
+}
+
+/* Card Styling */
+.fan-creations-block .tab-content {
+  position: relative;
+  z-index: 1;
+}
+
+.fan-creations-block .card {
+  background: rgba(35, 35, 60, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(143, 88, 173, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  height: 100%;
+  transition: all 0.35s cubic-bezier(0.15, 0.85, 0.35, 1);
+}
+
+.fan-creations-block .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+  border-color: rgba(143, 88, 173, 0.3);
+}
+
+.fan-creations-block .card-img-top {
+  height: 220px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  transition: all 0.4s ease;
+  transform-origin: center;
+  filter: brightness(0.95);
+}
+
+.fan-creations-block .card:hover .card-img-top {
+  filter: brightness(1.05);
+  transform: scale(1.03);
+}
+
+.fan-creations-block .card-body {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+.fan-creations-block .card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.fan-creations-block .card-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.fan-creations-block .text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.fan-creations-block .text-danger {
+  color: rgba(255, 132, 145, 0.95) !important;
+}
+
+/* Universal Button Styling */
+.fan-creations-block .btn {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.25s ease-out;
+  letter-spacing: 0.01em;
+}
+
+/* Primary Button Styling */
+.fan-creations-block .btn-primary {
+  background: linear-gradient(135deg, rgba(143, 88, 173, 0.9), rgba(91, 64, 124, 0.9));
+  border: none;
+  max-height: 55px;
+  width: auto;
+  max-width: 70%;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(143, 88, 173, 0.3);
+}
+
+.fan-creations-block .btn-primary:hover {
+  background: linear-gradient(135deg, rgba(153, 98, 183, 0.95), rgba(101, 74, 134, 0.95));
+  box-shadow: 0 6px 16px rgba(143, 88, 173, 0.5);
+  transform: translateY(-2px);
+}
+
+.fan-creations-block .btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(143, 88, 173, 0.4);
+}
+
+.fan-creations-block .btn svg {
+  margin-left: 0.5rem;
+  transition: transform 0.25s ease;
+}
+
+.fan-creations-block .btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* Secondary Button Styling */
+.fan-creations-block .btn-secondary {
+  background: rgba(76, 58, 117, 0.4);
+  border: 1px solid rgba(143, 88, 173, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fan-creations-block .btn-secondary:hover {
+  background: rgba(91, 64, 124, 0.5);
+  border-color: rgba(143, 88, 173, 0.3);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Video duration badge */
+.fan-creations-block .position-absolute {
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.35rem 0.75rem;
+  background: rgba(25, 26, 43, 0.85) !important;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(143, 88, 173, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading spinner */
+.fan-creations-block .spinner-border {
+  color: rgba(143, 88, 173, 0.9);
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* Animation for cards appearance - smoother and more subtle */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fan-creations-block .col-lg-4 {
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.fan-creations-block .col-lg-4:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.fan-creations-block .col-lg-4:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.fan-creations-block .col-lg-4:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  #fan-creations {
+    padding: 5rem 0;
+  }
+  
+  .fan-creations-block .title-holder h1 {
+    font-size: 2.5rem;
+  }
+  
+  .fan-creations-block .nav-pills {
+    gap: 0.75rem;
+  }
+  
+  .fan-creations-block .nav-pills .nav-link {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.25rem;
+    min-width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  #fan-creations {
+    padding: 4.5rem 0;
+  }
+  
+  .fan-creations-block .title-holder h1 {
+    font-size: 2rem;
+  }
+  
+  .fan-creations-block .title-holder .subtitle {
+    font-size: 1rem;
+  }
+  
+  .fan-creations-block .card-img-top {
+    height: 200px;
+  }
+  
+  .fan-creations-block .btn {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #fan-creations {
+    padding: 4rem 0;
+  }
+  
+  .fan-creations-block .title-holder {
+    margin-bottom: 3rem;
+  }
+  
+  .fan-creations-block .nav-pills {
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .fan-creations-block .nav-pills .nav-item {
+    width: calc(50% - 0.5rem);
+  }
+  
+  .fan-creations-block .nav-pills .nav-link {
+    width: 100%;
+    min-width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .fan-creations-block .card-body {
+    padding: 1.25rem 1rem;
+  }
+  
+  .fan-creations-block .card-title {
+    font-size: 1.2rem;
+  }
+  
+  .fan-creations-block .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+}

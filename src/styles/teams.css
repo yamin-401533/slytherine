@@ -1,0 +1,209 @@
+/* Teams block styling - Purple-Dark Green Professional Theme */
+:root {
+  --color-primary: #4b2864; /* Purple */
+  --color-secondary: #1a472a; /* Dark Green */
+  --color-background: #fcfcfc;
+  --color-background-alt: #f5f5f7;
+  --color-heading: #2e2e2e;
+  --color-text: #333333;
+  --color-text-lighter: #666666;
+  --border-radius-lg: 8px;
+  --space-xxxl: 5rem;
+  --space-xxl: 3rem;
+  --space-xl: 2rem;
+  --space-lg: 1.5rem;
+  --space-md: 1rem;
+  --space-sm: 0.75rem;
+  --space-xs: 0.5rem;
+}
+
+.teams-block {
+  padding: var(--space-xxxl) 0;
+  background: var(--color-background-alt);
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-primary);
+}
+
+.teams-block .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.teams-block .title-holder {
+  text-align: center;
+  margin-bottom: var(--space-xxl);
+  position: relative;
+}
+
+.teams-block .title-holder::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  margin: var(--space-sm) auto 0;
+}
+
+.teams-block .title-holder h1 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.teams-block .title-holder .subtitle {
+  font-size: 1.25rem;
+  color: var(--color-secondary);
+  margin-bottom: var(--space-md);
+  font-weight: 500;
+}
+
+.teams-block .team-card {
+  background: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 30px rgba(106, 13, 173, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: var(--space-xl);
+  height: 100%;
+}
+
+.teams-block .team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(106, 13, 173, 0.2);
+}
+
+.teams-block .image {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.teams-block .image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.teams-block .team-card:hover .image img {
+  transform: scale(1.1);
+}
+
+.teams-block .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(106, 13, 173, 0.8), rgba(26, 71, 42, 0.8));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.teams-block .image:hover .overlay {
+  opacity: 1;
+}
+
+.teams-block .socials ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.teams-block .socials ul li {
+  display: inline-block;
+}
+
+.teams-block .socials ul li a {
+  background: var(--color-background);
+  color: var(--color-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.teams-block .socials ul li a:hover {
+  background: var(--color-secondary);
+  color: var(--color-background);
+  transform: translateY(-3px);
+}
+
+.teams-block .content {
+  padding: var(--space-lg);
+  text-align: center;
+  position: relative;
+}
+
+.teams-block .content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+.teams-block .content h3 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin: var(--space-sm) 0;
+  font-weight: 600;
+}
+
+.teams-block .content .designation {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-secondary);
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+}
+
+.teams-block .content p {
+  color: var(--color-text);
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.teams-block .house-badge {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.8rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 991px) {
+  .teams-block .team-card {
+    margin-bottom: var(--space-lg);
+  }
+}
+
+@media (max-width: 767px) {
+  .teams-block .image img {
+    height: 250px;
+  }
+}
