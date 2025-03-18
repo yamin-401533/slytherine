@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { motion } from 'framer-motion';
 import '../styles/blog.css';
 
+// Moved data outside component for cleaner organization
 const blogData = [
   {
     id: 1,
@@ -98,16 +99,107 @@ const featuredNews = [
   }
 ];
 
-function AppBlog() {
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(3);
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { duration: 0.5 }
+  }
+};
+
+// CountdownTimer component - improved and extracted for better organization
+const CountdownTimer = ({ targetDate }) => {
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0
+    seconds: 0,
+    isComplete: false
   });
+  
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+      
+      if (difference > 0) {
+        return {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+          isComplete: false
+        };
+      } else {
+        return {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+          isComplete: true
+        };
+      }
+    };
+    
+    // Initial calculation
+    setCountdown(calculateTimeLeft());
+    
+    // Update every second
+    const interval = setInterval(() => {
+      setCountdown(calculateTimeLeft());
+    }, 1000);
+    
+    // Clean up
+    return () => clearInterval(interval);
+  }, [targetDate]);
+  
+  return (
+    <div className="countdown">
+      <div className="digit-box">
+        <span className="number">{countdown.days}</span>
+        <span className="label">Days</span>
+      </div>
+      <div className="digit-box">
+        <span className="number">{countdown.hours}</span>
+        <span className="label">Hours</span>
+      </div>
+      <div className="digit-box">
+        <span className="number">{countdown.minutes}</span>
+        <span className="label">Minutes</span>
+      </div>
+      <div className="digit-box">
+        <span className="number">{countdown.seconds}</span>
+        <span className="label">Seconds</span>
+      </div>
+      <div className="countdown-text">
+        {countdown.isComplete 
+          ? "The event has started!" 
+          : "Until the first theatrical re-release"}
+      </div>
+    </div>
+  );
+};
+
+function AppBlog() {
+  // State management
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [visibleItems, setVisibleItems] = useState(3);
+  
+  // Setting a future date for the countdown (October 11, 2025)
+  const releaseDate = new Date('October 11, 2025 00:00:00').getTime();
   
   const handleClose = () => setShowModal(false);
   const handleShow = (movie) => {
@@ -115,34 +207,7 @@ function AppBlog() {
     setShowModal(true);
   };
 
-  // Calculate countdown to release date (October 11, 2024)
-  useEffect(() => {
-    const releaseDate = new Date('October 11, 2024 00:00:00').getTime();
-    
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const difference = releaseDate - now;
-      
-      if (difference > 0) {
-        setCountdown({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
-        });
-      }
-    };
-    
-    // Initial update
-    updateCountdown();
-    
-    // Set interval for updating countdown
-    const interval = setInterval(updateCountdown, 1000);
-    
-    // Cleanup
-    return () => clearInterval(interval);
-  }, []);
-
+  // Responsive adjustment for movie cards display
   useEffect(() => {
     const checkWindowSize = () => {
       if (window.innerWidth < 768) {
@@ -157,29 +222,8 @@ function AppBlog() {
     checkWindowSize();
     window.addEventListener('resize', checkWindowSize);
     
-    // Cleanup
     return () => window.removeEventListener('resize', checkWindowSize);
   }, []);
-
-  // Variants for framer-motion animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.2
-      }
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { duration: 0.5 }
-    }
-  };
 
   return (
     <section id="blog" className="block blog-block">
@@ -224,26 +268,9 @@ function AppBlog() {
           </Carousel>
         </div>
         
+        {/* Enhanced Countdown Banner */}
         <div className="info-banner">
-          <div className="countdown">
-            <div className="digit-box">
-              <span className="number">{countdown.days}</span>
-              <span className="label">Days</span>
-            </div>
-            <div className="digit-box">
-              <span className="number">{countdown.hours}</span>
-              <span className="label">Hours</span>
-            </div>
-            <div className="digit-box">
-              <span className="number">{countdown.minutes}</span>
-              <span className="label">Minutes</span>
-            </div>
-            <div className="digit-box">
-              <span className="number">{countdown.seconds}</span>
-              <span className="label">Seconds</span>
-            </div>
-            <div className="countdown-text">Until the first theatrical re-release</div>
-          </div>
+          <CountdownTimer targetDate={releaseDate} />
         </div>
         
         <Row className="mt-5">
@@ -255,10 +282,7 @@ function AppBlog() {
               transition={{ duration: 1 }}
             >
               <div className="card-header">
-                <br></br>
-                <br></br>
                 <h2>The Magic Reborn</h2>
-
                 <div className="card-icon">
                   <i className="fas fa-wand-sparkles"></i>
                 </div>
@@ -268,7 +292,7 @@ function AppBlog() {
                   Warner Bros. Pictures proudly presents the complete <strong>Harry Potter</strong> film collection returning to theaters worldwide as part of the "Back to Hogwarts" celebration. Experience all eight iconic films, from "Harry Potter and the Sorcerer's Stone" to "Harry Potter and the Deathly Hallows - Part 2," remastered and enhanced for modern cinema standards.
                 </p>
                 <p className="content-text">
-                  Beginning October 11, 2024, theaters nationwide will offer these beloved classics in multiple formats, including standard digital projection, IMAX, Dolby Cinema, and select 3D screenings. Each theatrical release will feature exclusive behind-the-scenes content and filmmaker introductions never before seen by audiences.
+                  Beginning October 11, 2025, theaters nationwide will offer these beloved classics in multiple formats, including standard digital projection, IMAX, Dolby Cinema, and select 3D screenings. Each theatrical release will feature exclusive behind-the-scenes content and filmmaker introductions never before seen by audiences.
                 </p>
                 <div className="format-badges">
                   <span className="format-badge imax">IMAX</span>
@@ -345,6 +369,7 @@ function AppBlog() {
                           variant="light" 
                           className="btn-play"
                           onClick={() => handleShow(movie)}
+                          aria-label={`Play ${movie.title} trailer`}
                         >
                           <i className="fas fa-play"></i>
                         </Button>
@@ -394,10 +419,16 @@ function AppBlog() {
             <div className="newsletter-content">
               <h3>Stay Updated on Wizarding World News</h3>
               <p>Subscribe to our newsletter for exclusive content, early access tickets, and magical announcements</p>
-              <div className="newsletter-form">
-                <input type="email" placeholder="Enter your email" className="form-control" />
-                <Button variant="primary">Subscribe <i className="fas fa-wand-sparkles"></i></Button>
-              </div>
+              <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="form-control" 
+                  aria-label="Email subscription"
+                  required
+                />
+                <Button type="submit" variant="primary">Subscribe <i className="fas fa-wand-sparkles"></i></Button>
+              </form>
             </div>
           </div>
         </div>
