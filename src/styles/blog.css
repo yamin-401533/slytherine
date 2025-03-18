@@ -19,12 +19,16 @@
 
 /* Global styles and section container */
 .blog-block {
-  background-color: var(--primary-color);
-  color: var(--text-color);
-  font-family: var(--font-body);
+  padding: 6rem 0;
+  background: linear-gradient(125deg,
+    rgba(16, 16, 32, 0.97) 0%,
+    rgba(33, 31, 58, 0.96) 35%,
+    rgba(55, 37, 87, 0.95) 65%,
+    rgba(16, 16, 32, 0.97) 100%
+  );
   position: relative;
-  padding: 80px 0;
   overflow: hidden;
+  box-shadow: inset 0 0 150px rgba(12, 5, 24, 0.4);
 }
 
 
@@ -780,6 +784,7 @@
   font-size: 1rem;
   transition: var(--transition);
   border-radius: var(--border-radius);
+  max-width: 30%;
 }
 
 .newsletter-form .btn-primary:hover {
