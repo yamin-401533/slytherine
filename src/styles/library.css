@@ -89,7 +89,7 @@
   margin-bottom: 2.5rem;
   background: rgba(16, 7, 31, 0.5);
   border-radius: 10px;
-  padding: 1.25rem;
+  padding: 1px 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(122, 75, 175, 0.15);
 }
@@ -136,7 +136,10 @@
 .filter-container {
   display: flex;
   align-items: center;
+  flex-direction: row;
   gap: 1rem;
+  margin-left: 60px;
+  top: 32px;
 }
 
 .filter-select {
