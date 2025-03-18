@@ -332,7 +332,7 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: 20px;
-  opacity: 0;
+  opacity: 0.64;
   transition: opacity 0.3s ease;
 }
 
@@ -354,8 +354,8 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  width: 45%;
 }
-
 .card-play-btn {
   background-color: rgba(115, 55, 186, 0.9);
   color: #fff;
