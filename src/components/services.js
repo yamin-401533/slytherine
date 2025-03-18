@@ -108,6 +108,7 @@ function AppServices() {
         
         <div className="filter-container">
           <h4 className="filter-title">Filter by trait:</h4>
+               <br></br>
           <div className="trait-filters">
             <Badge 
               className={`trait-badge ${filterTrait === null ? 'active' : ''}`} 
