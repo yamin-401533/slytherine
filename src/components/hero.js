@@ -5,7 +5,7 @@ const heroData = [
   {
     id: 1,
     image: require('../assets/images/img-hero3.jpg'),
-    title: 'Harry Potter',
+    title: '',
     description: 'Explore the Wizarding World of J.K. Rowling — The Harry Potter series. Buy the books, play the games, discover the magic.',
     link: '#about',
   },
