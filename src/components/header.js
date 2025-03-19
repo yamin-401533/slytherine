@@ -125,7 +125,11 @@ const Navbar = ({ brandName = 'Slytherin' }) => {
           aria-expanded={isMobileNavOpen}
           aria-controls="mobile-menu"
         >
-          <span className={`${styles.hamburger} ${isMobileNavOpen ? styles.open : ''}`} aria-hidden="true"></span>
+          {isMobileNavOpen ? (
+    <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+  ) : (
+    <i className="fa-solid fa-bars" aria-hidden="true"></i>
+  )}
         </button>
       </div>
 
@@ -144,7 +148,7 @@ const Navbar = ({ brandName = 'Slytherin' }) => {
             onClick={toggleMobileNav}
             aria-label="Close mobile menu"
           >
-            <span aria-hidden="true">&times;</span>
+            <i className="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         </div>
 
