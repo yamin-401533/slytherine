@@ -60,7 +60,12 @@
 
 /* CTA Button */
 .hero-block .btn-primary {
-  background: linear-gradient(145deg, #9c5fe7, #4a90e2);
+  background: linear-gradient(135deg,
+    rgba(16, 16, 32, 0.97) 0%,
+    rgba(33, 31, 58, 0.96) 35%,
+    rgba(55, 37, 87, 0.95) 65%,
+    rgba(74, 44, 113, 0.94) 100%
+  );
   border: none;
   border-radius: 8px;
   color: white;
@@ -99,12 +104,18 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg,
+    rgba(16, 16, 32, 0.97) 0%,
+    rgba(33, 31, 58, 0.96) 35%,
+    rgba(122, 92, 173, 0.95) 65%,
+    rgba(74, 44, 113, 0.94) 100%
+  );
   backdrop-filter: blur(4px);
-  opacity: 0.7;
-  top: 50%;
+  opacity: 0.8;
+  top: 63%;
   transform: translateY(-50%);
   margin: 0 1rem;
+  padding: 10px;
 }
 
 .hero-block .carousel-control-prev:hover,
