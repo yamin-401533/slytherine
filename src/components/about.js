@@ -5,6 +5,12 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Tab from 'react-bootstrap/Tab';
+import Nav from 'react-bootstrap/Nav';
 
 import img1 from '../assets/images/img1.jpg';
 import img16 from '../assets/images/img16.jpg';
@@ -18,6 +24,55 @@ function AppAbout() {
     Slytherin: 26,
     Hufflepuff: 19,
   });
+  
+  // New states for interactive features
+  const [showActivityModal, setShowActivityModal] = useState(false);
+  const [userHouse, setUserHouse] = useState('');
+  const [pointsEarned, setPointsEarned] = useState(0);
+  const [selectedActivity, setSelectedActivity] = useState('quiz');
+  const [historicalData, setHistoricalData] = useState([
+    { month: 'January', Ravenclaw: 56, Gryffindor: 62, Slytherin: 71, Hufflepuff: 52 },
+    { month: 'February', Ravenclaw: 63, Gryffindor: 59, Slytherin: 65, Hufflepuff: 57 },
+    { month: 'March', Ravenclaw: 71, Gryffindor: 68, Slytherin: 60, Hufflepuff: 62 },
+    { month: 'April', Ravenclaw: 68, Gryffindor: 72, Slytherin: 64, Hufflepuff: 59 },
+    { month: 'May', Ravenclaw: 75, Gryffindor: 70, Slytherin: 69, Hufflepuff: 63 },
+    { month: 'June', Ravenclaw: 72, Gryffindor: 75, Slytherin: 73, Hufflepuff: 68 },
+  ]);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [completedActivities, setCompletedActivities] = useState([]);
+
+  const houses = [
+    { name: "Ravenclaw", progress: votes.Ravenclaw, emoji: "🦅", variant: "info", trait: "Intelligence" },
+    { name: "Gryffindor", progress: votes.Gryffindor, emoji: "🦁", variant: "danger", trait: "Bravery" },
+    { name: "Slytherin", progress: votes.Slytherin, emoji: "🐍", variant: "success", trait: "Ambition" },
+    { name: "Hufflepuff", progress: votes.Hufflepuff, emoji: "🦡", variant: "warning", trait: "Loyalty" },
+  ];
+
+  const activities = [
+    { id: 'quiz', name: 'Magical Creatures Quiz', points: 5, description: 'Test your knowledge of magical creatures from the wizarding world!' },
+    { id: 'spell', name: 'Spell Practice', points: 3, description: 'Practice your spell pronunciation and wand movements.' },
+    { id: 'potion', name: 'Potion Making', points: 8, description: 'Follow recipe instructions to brew a magical potion.' },
+    { id: 'trivia', name: 'Harry Potter Trivia', points: 4, description: 'Answer trivia questions about the Harry Potter series.' },
+  ];
+
+  // Sample quiz questions for the "Magical Creatures Quiz" activity
+  const quizQuestions = [
+    { 
+      question: 'What magical creature can only be seen by those who have witnessed death?', 
+      options: ['Hippogriff', 'Thestral', 'Niffler', 'Bowtruckle'],
+      answer: 'Thestral'
+    },
+    { 
+      question: 'Which of these creatures guards the entrance to Dumbledore\'s office?', 
+      options: ['Sphinx', 'Griffin', 'Gargoyle', 'Phoenix'],
+      answer: 'Gargoyle'
+    },
+    { 
+      question: 'What creature does Hagrid breed in "Goblet of Fire" for the Triwizard Tournament?', 
+      options: ['Hippogriffs', 'Dragons', 'Blast-Ended Skrewts', 'Acromantulas'],
+      answer: 'Blast-Ended Skrewts'
+    },
+  ];
 
   const handleVote = (house) => {
     setVotes((prevVotes) => ({
@@ -26,12 +81,49 @@ function AppAbout() {
     }));
   };
 
-  const houses = [
-    { name: "Ravenclaw", progress: votes.Ravenclaw, emoji: "🦅", variant: "info", trait: "Intelligence" },
-    { name: "Gryffindor", progress: votes.Gryffindor, emoji: "🦁", variant: "danger", trait: "Bravery" },
-    { name: "Slytherin", progress: votes.Slytherin, emoji: "🐍", variant: "success", trait: "Ambition" },
-    { name: "Hufflepuff", progress: votes.Hufflepuff, emoji: "🦡", variant: "warning", trait: "Loyalty" },
-  ];
+  const openActivityModal = () => {
+    setShowActivityModal(true);
+  };
+
+  const closeActivityModal = () => {
+    setShowActivityModal(false);
+    setPointsEarned(0);
+  };
+
+  const selectUserHouse = (house) => {
+    setUserHouse(house);
+  };
+
+  const completeActivity = () => {
+    // Find the points for the selected activity
+    const activity = activities.find(act => act.id === selectedActivity);
+    const pointsToAdd = activity ? activity.points : 3;
+    
+    // Add points to the selected house
+    if (userHouse) {
+      setVotes(prevVotes => ({
+        ...prevVotes,
+        [userHouse]: prevVotes[userHouse] + pointsToAdd
+      }));
+      
+      // Add to completed activities
+      setCompletedActivities(prev => [
+        ...prev, 
+        { 
+          activity: activity.name, 
+          house: userHouse, 
+          points: pointsToAdd, 
+          date: new Date().toLocaleDateString() 
+        }
+      ]);
+      
+      setPointsEarned(pointsToAdd);
+    }
+  };
+
+  const viewHistoricalData = () => {
+    setShowHistoryModal(true);
+  };
 
   return (
     <section id="about" className="block about-block py-5" ref={sectionRef}>
@@ -55,8 +147,6 @@ function AppAbout() {
                     style={{ objectFit: 'cover', height: '400px', width: '100%' }}
                   />
                 </div>
-                <br></br>
-                <br></br>
                 <h3 className="mb-3">Harry Potter Book Day</h3>
                 
                 <p>
@@ -70,7 +160,7 @@ function AppAbout() {
                   <Badge bg="secondary" className="me-2 p-2">Magical Activities</Badge>
                   <Badge bg="info" className="p-2">Global Event</Badge>
                 </div>
-                <br></br>
+                
                 <h3 className="mb-3">Who can take part?</h3>
                 <p>
                   Everyone! Whether you're a teacher, librarian, bookseller, parent, carer, or simply a fan,
@@ -107,8 +197,6 @@ function AppAbout() {
                   <h4 className="mb-0">2024 Theme: Care of Magical Creatures</h4>
                 </div>
 
-
-
                 <div className="featured-creatures d-flex justify-content-between my-4">
                   <div className="creature text-center">
                     <div className="creature-icon mb-2">🦄</div>
@@ -129,7 +217,18 @@ function AppAbout() {
                 </div>
 
                 <div className="leaderboard-container">
-                  <h3 className="text-center mb-4"><b>House Points Leaderboard 🏆</b></h3>
+                  <h3 className="text-center mb-3"><b>House Points Leaderboard 🏆</b></h3>
+                  
+                  {/* New interactive buttons */}
+                  <div className="text-center mb-4">
+                    <Button variant="outline-light" className="me-2 mb-2" onClick={openActivityModal}>
+                      <span className="me-1">✨</span> Earn House Points
+                    </Button>
+                    <Button variant="outline-light" className="mb-2" onClick={viewHistoricalData}>
+                      <span className="me-1">📜</span> Historical Data
+                    </Button>
+                  </div>
+                  
                   {houses.map((house, index) => (
                     <div key={index} className="mb-4 position-relative house-progress">
                       <div className="d-flex justify-content-between align-items-center mb-2">
@@ -150,13 +249,28 @@ function AppAbout() {
                       </button>
                     </div>
                   ))}
+                  
+                  {/* Recent activity log */}
+                  {completedActivities.length > 0 && (
+                    <div className="recent-activity mt-4">
+                      <h5 className="mb-3">Recent Activities</h5>
+                      <div className="recent-activity-list">
+                        {completedActivities.slice(-3).reverse().map((activity, index) => (
+                          <div key={index} className="activity-item mb-2 p-2 rounded">
+                            <div><strong>{activity.house}</strong> earned {activity.points} points</div>
+                            <div className="small text-light">{activity.activity} • {activity.date}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <br></br>
-                <div className='img'>
+                
+                <div className='img mt-4'>
                   <Image
                     src={img16}
                     className="img-fluid rounded-3 shadow"
-                    style={{ objectFit: 'cover', height: '460px', width: '100%' }}
+                    style={{ objectFit: 'cover', height: '300px', width: '100%' }}
                   />
                 </div>
               </Card.Body>
@@ -164,6 +278,199 @@ function AppAbout() {
           </Col>
         </Row>
       </Container>
+      
+      {/* Activity Modal */}
+      <Modal show={showActivityModal} onHide={closeActivityModal} centered className="house-activity-modal">
+        <Modal.Header closeButton className="border-0">
+          <Modal.Title>Earn Points for Your House</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!userHouse ? (
+            <div className="house-selection">
+              <h5 className="mb-3 text-center">First, choose your house:</h5>
+              <div className="house-buttons d-flex flex-wrap justify-content-center">
+                {houses.map((house) => (
+                  <Button 
+                    key={house.name}
+                    variant="outline-primary"
+                    className="house-select-btn m-2" 
+                    onClick={() => selectUserHouse(house.name)}
+                  >
+                    <span className="house-emoji me-2">{house.emoji}</span>
+                    {house.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ) : pointsEarned > 0 ? (
+            <div className="text-center points-earned-container">
+              <div className="success-icon mb-3">🏆</div>
+              <h4>Congratulations!</h4>
+              <p className="points-earned">You earned <span>{pointsEarned} points</span> for {userHouse}!</p>
+              <Button variant="primary" onClick={closeActivityModal}>Continue</Button>
+            </div>
+          ) : (
+            <div className="activity-selection">
+              <h5 className="mb-3">Choose an activity to earn points for {userHouse}:</h5>
+              
+              <Form.Select 
+                className="mb-3"
+                value={selectedActivity} 
+                onChange={(e) => setSelectedActivity(e.target.value)}
+              >
+                {activities.map((activity) => (
+                  <option key={activity.id} value={activity.id}>
+                    {activity.name} ({activity.points} points)
+                  </option>
+                ))}
+              </Form.Select>
+              
+              <div className="activity-details p-3 rounded mb-4">
+                <h6>
+                  {activities.find(a => a.id === selectedActivity)?.name}
+                </h6>
+                <p className="mb-0">
+                  {activities.find(a => a.id === selectedActivity)?.description}
+                </p>
+              </div>
+              
+              {selectedActivity === 'quiz' && (
+                <div className="quiz-preview">
+                  <p className="sample-question mb-2">Sample question:</p>
+                  <p className="fw-bold mb-1">{quizQuestions[0].question}</p>
+                  <ul className="quiz-options ps-3">
+                    {quizQuestions[0].options.map((option, idx) => (
+                      <li key={idx}>{option}</li>
+                    ))}
+                  </ul>
+                  <p className="quiz-note">Complete the full quiz to earn points for your house!</p>
+                </div>
+              )}
+              
+              <div className="d-flex justify-content-between mt-4">
+                <Button 
+                  variant="outline-secondary" 
+                  onClick={() => setUserHouse('')}
+                >
+                  Change House
+                </Button>
+                <Button 
+                  variant="primary" 
+                  onClick={completeActivity}
+                >
+                  Complete Activity
+                </Button>
+              </div>
+            </div>
+          )}
+        </Modal.Body>
+      </Modal>
+      
+      {/* Historical Data Modal */}
+      <Modal show={showHistoryModal} onHide={() => setShowHistoryModal(false)} centered size="lg" className="history-modal">
+        <Modal.Header closeButton className="border-0">
+          <Modal.Title>House Points Historical Data</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Tab.Container defaultActiveKey="table">
+            <Nav variant="tabs" className="mb-4">
+              <Nav.Item>
+                <Nav.Link eventKey="table">Monthly Data</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="winners">House Cup Winners</Nav.Link>
+              </Nav.Item>
+            </Nav>
+            
+            <Tab.Content>
+              <Tab.Pane eventKey="table">
+                <div className="table-responsive">
+                  <table className="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>Ravenclaw</th>
+                        <th>Gryffindor</th>
+                        <th>Slytherin</th>
+                        <th>Hufflepuff</th>
+                        <th>Winner</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {historicalData.map((data, index) => {
+                        const scores = { 
+                          Ravenclaw: data.Ravenclaw, 
+                          Gryffindor: data.Gryffindor, 
+                          Slytherin: data.Slytherin, 
+                          Hufflepuff: data.Hufflepuff 
+                        };
+                        const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+                        
+                        return (
+                          <tr key={index}>
+                            <td>{data.month}</td>
+                            <td>{data.Ravenclaw}</td>
+                            <td>{data.Gryffindor}</td>
+                            <td>{data.Slytherin}</td>
+                            <td>{data.Hufflepuff}</td>
+                            <td>
+                              {houses.find(h => h.name === winner)?.emoji} {winner}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </Tab.Pane>
+              
+              <Tab.Pane eventKey="winners">
+                <div className="historical-winners">
+                  <h5 className="mb-4 text-center">Annual House Cup Winners</h5>
+                  
+                  <ListGroup>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span className="year">2023</span>
+                        <span className="winner-name ms-3">🦁 Gryffindor</span>
+                      </div>
+                      <Badge bg="danger" pill>964 points</Badge>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span className="year">2022</span>
+                        <span className="winner-name ms-3">🐍 Slytherin</span>
+                      </div>
+                      <Badge bg="success" pill>892 points</Badge>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span className="year">2021</span>
+                        <span className="winner-name ms-3">🦅 Ravenclaw</span>
+                      </div>
+                      <Badge bg="info" pill>917 points</Badge>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span className="year">2020</span>
+                        <span className="winner-name ms-3">🦡 Hufflepuff</span>
+                      </div>
+                      <Badge bg="warning" pill>876 points</Badge>
+                    </ListGroup.Item>
+                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <span className="year">2019</span>
+                        <span className="winner-name ms-3">🐍 Slytherin</span>
+                      </div>
+                      <Badge bg="success" pill>931 points</Badge>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </div>
+              </Tab.Pane>
+            </Tab.Content>
+          </Tab.Container>
+        </Modal.Body>
+      </Modal>
     </section>
   );
 }
