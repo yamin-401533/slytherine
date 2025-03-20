@@ -631,3 +631,166 @@
     padding: 1.5rem;
   }
 }
+
+
+
+
+/* House activity modal styles */
+.house-activity-modal .modal-content {
+  background: rgba(33, 31, 58, 0.95);
+  color: #fff;
+  border: 1px solid rgba(156, 95, 231, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.house-activity-modal .modal-header {
+  border-bottom: 1px solid rgba(156, 95, 231, 0.1);
+}
+
+.house-activity-modal .modal-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+.house-buttons {
+  gap: 10px;
+}
+
+.house-select-btn {
+  border: 1px solid rgba(156, 95, 231, 0.3);
+  background: rgba(156, 95, 231, 0.05);
+  color: #fff;
+  transition: all 0.3s ease;
+  padding: 12px 18px;
+  border-radius: 8px;
+}
+
+.house-select-btn:hover {
+  background: rgba(156, 95, 231, 0.2);
+  border-color: rgba(156, 95, 231, 0.5);
+  transform: translateY(-2px);
+}
+
+.house-emoji {
+  font-size: 1.2rem;
+}
+
+.points-earned-container {
+  padding: 20px;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.points-earned {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.points-earned span {
+  font-weight: 700;
+  color: #9c5fe7;
+}
+
+.activity-details {
+  background: rgba(156, 95, 231, 0.08);
+  border-left: 3px solid rgba(156, 95, 231, 0.5);
+}
+
+.history-modal .modal-content {
+  background: rgba(33, 31, 58, 0.95);
+  color: #fff;
+  border: 1px solid rgba(156, 95, 231, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.history-modal .nav-tabs {
+  border-bottom: 1px solid rgba(156, 95, 231, 0.3);
+}
+
+.history-modal .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.history-modal .nav-link:hover {
+  color: #fff;
+}
+
+.history-modal .nav-link.active {
+  background: rgba(156, 95, 231, 0.1);
+  color: #fff;
+  border-bottom: 2px solid #9c5fe7;
+}
+
+.history-modal .table {
+  color: #fff;
+}
+
+.history-modal .table-hover tbody tr:hover {
+  background-color: rgba(156, 95, 231, 0.1);
+}
+
+.year {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.winner-name {
+  font-weight: 500;
+}
+
+.list-group-item {
+  background-color: rgba(156, 95, 231, 0.05);
+  border: 1px solid rgba(156, 95, 231, 0.1);
+  color: #fff;
+  margin-bottom: 8px;
+  border-radius: 8px !important;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: rgba(156, 95, 231, 0.1);
+  transform: translateX(5px);
+}
+
+.recent-activity {
+  background: rgba(156, 95, 231, 0.08);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.recent-activity h5 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+.activity-item {
+  background: rgba(156, 95, 231, 0.08);
+  border-left: 2px solid rgba(156, 95, 231, 0.5);
+  font-size: 0.9rem;
+}
+
+.quiz-preview {
+  background: rgba(156, 95, 231, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.quiz-options {
+  list-style-type: lower-alpha;
+}
+
+.quiz-note {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
