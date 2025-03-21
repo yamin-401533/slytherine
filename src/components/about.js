@@ -8,7 +8,6 @@ import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 
@@ -18,111 +17,135 @@ import '../styles/about.css';
 
 function AppAbout() {
   const sectionRef = useRef(null);
-  const [votes, setVotes] = useState({
-    Ravenclaw: 28,
-    Gryffindor: 26,
-    Slytherin: 26,
-    Hufflepuff: 19,
-  });
   
-  // New states for interactive features
-  const [showActivityModal, setShowActivityModal] = useState(false);
-  const [userHouse, setUserHouse] = useState('');
-  const [pointsEarned, setPointsEarned] = useState(0);
-  const [selectedActivity, setSelectedActivity] = useState('quiz');
-  const [historicalData, setHistoricalData] = useState([
-    { month: 'January', Ravenclaw: 56, Gryffindor: 62, Slytherin: 71, Hufflepuff: 52 },
-    { month: 'February', Ravenclaw: 63, Gryffindor: 59, Slytherin: 65, Hufflepuff: 57 },
-    { month: 'March', Ravenclaw: 71, Gryffindor: 68, Slytherin: 60, Hufflepuff: 62 },
-    { month: 'April', Ravenclaw: 68, Gryffindor: 72, Slytherin: 64, Hufflepuff: 59 },
-    { month: 'May', Ravenclaw: 75, Gryffindor: 70, Slytherin: 69, Hufflepuff: 63 },
-    { month: 'June', Ravenclaw: 72, Gryffindor: 75, Slytherin: 73, Hufflepuff: 68 },
+  // House points state with historical data
+  const [houses, setHouses] = useState([
+    { 
+      name: "Ravenclaw", 
+      points: 285, 
+      emoji: "🦅", 
+      variant: "info", 
+      trait: "Intelligence",
+      history: [
+        { month: "September", points: 210 },
+        { month: "October", points: 245 },
+        { month: "November", points: 285 }
+      ]
+    },
+    { 
+      name: "Gryffindor", 
+      points: 267, 
+      emoji: "🦁", 
+      variant: "danger", 
+      trait: "Bravery",
+      history: [
+        { month: "September", points: 230 },
+        { month: "October", points: 256 },
+        { month: "November", points: 267 }
+      ]
+    },
+    { 
+      name: "Slytherin", 
+      points: 262, 
+      emoji: "🐍", 
+      variant: "success", 
+      trait: "Ambition",
+      history: [
+        { month: "September", points: 195 },
+        { month: "October", points: 245 },
+        { month: "November", points: 262 }
+      ]
+    },
+    { 
+      name: "Hufflepuff", 
+      points: 197, 
+      emoji: "🦡", 
+      variant: "warning", 
+      trait: "Loyalty",
+      history: [
+        { month: "September", points: 180 },
+        { month: "October", points: 187 },
+        { month: "November", points: 197 }
+      ]
+    },
   ]);
+
+  // User's selected house
+  const [userHouse, setUserHouse] = useState(localStorage.getItem('userHouse') || '');
+  
+  // Modal states
+  const [showSortingModal, setShowSortingModal] = useState(false);
+  const [showPointsModal, setShowPointsModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const [completedActivities, setCompletedActivities] = useState([]);
-
-  const houses = [
-    { name: "Ravenclaw", progress: votes.Ravenclaw, emoji: "🦅", variant: "info", trait: "Intelligence" },
-    { name: "Gryffindor", progress: votes.Gryffindor, emoji: "🦁", variant: "danger", trait: "Bravery" },
-    { name: "Slytherin", progress: votes.Slytherin, emoji: "🐍", variant: "success", trait: "Ambition" },
-    { name: "Hufflepuff", progress: votes.Hufflepuff, emoji: "🦡", variant: "warning", trait: "Loyalty" },
-  ];
-
-  const activities = [
-    { id: 'quiz', name: 'Magical Creatures Quiz', points: 5, description: 'Test your knowledge of magical creatures from the wizarding world!' },
-    { id: 'spell', name: 'Spell Practice', points: 3, description: 'Practice your spell pronunciation and wand movements.' },
-    { id: 'potion', name: 'Potion Making', points: 8, description: 'Follow recipe instructions to brew a magical potion.' },
-    { id: 'trivia', name: 'Harry Potter Trivia', points: 4, description: 'Answer trivia questions about the Harry Potter series.' },
-  ];
-
-  // Sample quiz questions for the "Magical Creatures Quiz" activity
-  const quizQuestions = [
-    { 
-      question: 'What magical creature can only be seen by those who have witnessed death?', 
-      options: ['Hippogriff', 'Thestral', 'Niffler', 'Bowtruckle'],
-      answer: 'Thestral'
-    },
-    { 
-      question: 'Which of these creatures guards the entrance to Dumbledore\'s office?', 
-      options: ['Sphinx', 'Griffin', 'Gargoyle', 'Phoenix'],
-      answer: 'Gargoyle'
-    },
-    { 
-      question: 'What creature does Hagrid breed in "Goblet of Fire" for the Triwizard Tournament?', 
-      options: ['Hippogriffs', 'Dragons', 'Blast-Ended Skrewts', 'Acromantulas'],
-      answer: 'Blast-Ended Skrewts'
-    },
-  ];
-
-  const handleVote = (house) => {
-    setVotes((prevVotes) => ({
-      ...prevVotes,
-      [house]: prevVotes[house] + 1,
-    }));
-  };
-
-  const openActivityModal = () => {
-    setShowActivityModal(true);
-  };
-
-  const closeActivityModal = () => {
-    setShowActivityModal(false);
-    setPointsEarned(0);
-  };
-
-  const selectUserHouse = (house) => {
-    setUserHouse(house);
-  };
-
-  const completeActivity = () => {
-    // Find the points for the selected activity
-    const activity = activities.find(act => act.id === selectedActivity);
-    const pointsToAdd = activity ? activity.points : 3;
-    
-    // Add points to the selected house
+  const [activityCompleted, setActivityCompleted] = useState(false);
+  const [pointsEarned, setPointsEarned] = useState(0);
+  
+  // Store user's house in localStorage
+  useEffect(() => {
     if (userHouse) {
-      setVotes(prevVotes => ({
-        ...prevVotes,
-        [userHouse]: prevVotes[userHouse] + pointsToAdd
-      }));
-      
-      // Add to completed activities
-      setCompletedActivities(prev => [
-        ...prev, 
-        { 
-          activity: activity.name, 
-          house: userHouse, 
-          points: pointsToAdd, 
-          date: new Date().toLocaleDateString() 
-        }
-      ]);
-      
-      setPointsEarned(pointsToAdd);
+      localStorage.setItem('userHouse', userHouse);
+    }
+  }, [userHouse]);
+  
+  // Check if user has been sorted
+  useEffect(() => {
+    if (!userHouse && !localStorage.getItem('sortingShown')) {
+      setTimeout(() => {
+        setShowSortingModal(true);
+        localStorage.setItem('sortingShown', 'true');
+      }, 2000);
+    }
+  }, [userHouse]);
+
+  // Add points to a house
+  const addPoints = (houseName, pointsToAdd) => {
+    setHouses(prevHouses => 
+      prevHouses.map(house => 
+        house.name === houseName 
+          ? { 
+              ...house, 
+              points: house.points + pointsToAdd,
+              history: [...house.history, 
+                { 
+                  month: new Date().toLocaleString('default', { month: 'long' }), 
+                  points: house.points + pointsToAdd 
+                }
+              ] 
+            } 
+          : house
+      )
+    );
+    
+    setPointsEarned(pointsToAdd);
+    setActivityCompleted(true);
+    setTimeout(() => setShowPointsModal(false), 3000);
+  };
+
+  // Sort houses by points
+  const sortedHouses = [...houses].sort((a, b) => b.points - a.points);
+  
+  // Choose house in sorting ceremony
+  const chooseHouse = (houseName) => {
+    setUserHouse(houseName);
+    setShowSortingModal(false);
+    
+    // Add 5 welcome points to the chosen house
+    addPoints(houseName, 5);
+  };
+  
+  // Complete an activity
+  const completeActivity = (activityPoints) => {
+    if (userHouse) {
+      addPoints(userHouse, activityPoints);
+    } else {
+      setShowSortingModal(true);
     }
   };
-
-  const viewHistoricalData = () => {
-    setShowHistoryModal(true);
+  
+  // Calculate percentage for visual display
+  const calculatePercentage = (points) => {
+    const maxPoints = Math.max(...houses.map(h => h.points));
+    return Math.round((points / maxPoints) * 100);
   };
 
   return (
@@ -130,7 +153,6 @@ function AppAbout() {
       <Container>
         <div className="title-holder text-center mb-5 animate-on-scroll">
           <h1>HARRY POTTER BOOK DAY 2024</h1>
-          
           <div className="subtitle">Celebrate the magic of Harry Potter with Bloomsbury • 17th October 2024</div>
         </div>
 
@@ -147,6 +169,47 @@ function AppAbout() {
                     style={{ objectFit: 'cover', height: '400px', width: '100%' }}
                   />
                 </div>
+                
+                {userHouse && (
+                  <div className="user-house-badge mb-4 p-3 text-center">
+                    <h4>Welcome to {userHouse}!</h4>
+                    <p className="mb-0">
+                      Earn points for your house by participating in activities.
+                    </p>
+                    <div className="mt-3">
+                      <Button 
+                        variant="primary" 
+                        className="me-2"
+                        onClick={() => setShowPointsModal(true)}
+                      >
+                        Earn Points
+                      </Button>
+                      <Button 
+                        variant="outline-secondary"
+                        onClick={() => setShowSortingModal(true)}
+                      >
+                        Change House
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                
+                {!userHouse && (
+                  <div className="user-house-badge mb-4 p-3 text-center">
+                    <h4>You haven't been sorted yet!</h4>
+                    <p className="mb-0">
+                      Join a house to participate in activities and earn points.
+                    </p>
+                    <Button 
+                      variant="primary" 
+                      className="mt-3"
+                      onClick={() => setShowSortingModal(true)}
+                    >
+                      Sorting Ceremony
+                    </Button>
+                  </div>
+                )}
+                
                 <h3 className="mb-3">Harry Potter Book Day</h3>
                 
                 <p>
@@ -165,13 +228,6 @@ function AppAbout() {
                 <p>
                   Everyone! Whether you're a teacher, librarian, bookseller, parent, carer, or simply a fan,
                   Harry Potter Book Day is for you! Celebrate at home, in your school, library, bookshop, or anywhere magical.
-                </p>
-
-                <h3 className="mb-3">Magical Activities and Crafts</h3>
-                <p>
-                  Unleash your creativity with Harry Potter-themed crafts and activities. From making your own wand
-                  and potion bottles to creating house banners and spell books, there's something for every fan.
-                  These activities are perfect for adding a touch of magic to your Harry Potter Book Day celebrations.
                 </p>
 
                 <div className="event-details mt-4 p-3 rounded">
@@ -217,53 +273,37 @@ function AppAbout() {
                 </div>
 
                 <div className="leaderboard-container">
-                  <h3 className="text-center mb-3"><b>House Points Leaderboard 🏆</b></h3>
-                  
-                  {/* New interactive buttons */}
-                  <div className="text-center mb-4">
-                    <Button variant="outline-light" className="me-2 mb-2" onClick={openActivityModal}>
-                      <span className="me-1">✨</span> Earn House Points
+                  <h3 className="text-center mb-4">
+                    <b>House Points Leaderboard 🏆</b>
+                    <Button 
+                      variant="link" 
+                      className="history-link ms-2"
+                      onClick={() => setShowHistoryModal(true)}
+                    >
+                      <i className="fas fa-history"></i> History
                     </Button>
-                    <Button variant="outline-light" className="mb-2" onClick={viewHistoricalData}>
-                      <span className="me-1">📜</span> Historical Data
-                    </Button>
-                  </div>
+                  </h3>
                   
-                  {houses.map((house, index) => (
+                  {sortedHouses.map((house, index) => (
                     <div key={index} className="mb-4 position-relative house-progress">
                       <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className="fw-bold">{house.emoji} {house.name}</span>
-                        <span>{house.progress}%</span>
+                        <span className="fw-bold">
+                          {index === 0 && <span className="position-badge">🥇</span>}
+                          {index === 1 && <span className="position-badge">🥈</span>}
+                          {index === 2 && <span className="position-badge">🥉</span>}
+                          {house.emoji} {house.name}
+                          {house.name === userHouse && <span className="user-house-indicator ms-2">★</span>}
+                        </span>
+                        <span>{house.points} pts</span>
                       </div>
                       <div className="progress-bar">
                         <div
-                          className="progress"
-                          style={{ width: `${house.progress}%` }}
+                          className={`progress progress-${house.name.toLowerCase()}`}
+                          style={{ width: `${calculatePercentage(house.points)}%` }}
                         ></div>
                       </div>
-                      <button
-                        className="btn btn-sm btn-outline-light mt-2"
-                        onClick={() => handleVote(house.name)}
-                      >
-                        Vote for {house.name}
-                      </button>
                     </div>
                   ))}
-                  
-                  {/* Recent activity log */}
-                  {completedActivities.length > 0 && (
-                    <div className="recent-activity mt-4">
-                      <h5 className="mb-3">Recent Activities</h5>
-                      <div className="recent-activity-list">
-                        {completedActivities.slice(-3).reverse().map((activity, index) => (
-                          <div key={index} className="activity-item mb-2 p-2 rounded">
-                            <div><strong>{activity.house}</strong> earned {activity.points} points</div>
-                            <div className="small text-light">{activity.activity} • {activity.date}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
                 
                 <div className='img mt-4'>
@@ -279,192 +319,169 @@ function AppAbout() {
         </Row>
       </Container>
       
-      {/* Activity Modal */}
-      <Modal show={showActivityModal} onHide={closeActivityModal} centered className="house-activity-modal">
-        <Modal.Header closeButton className="border-0">
-          <Modal.Title>Earn Points for Your House</Modal.Title>
+      {/* Sorting Modal */}
+      <Modal show={showSortingModal} onHide={() => setShowSortingModal(false)} centered>
+        <Modal.Header closeButton className="sorting-modal-header">
+          <Modal.Title>Hogwarts Sorting Ceremony</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {!userHouse ? (
-            <div className="house-selection">
-              <h5 className="mb-3 text-center">First, choose your house:</h5>
-              <div className="house-buttons d-flex flex-wrap justify-content-center">
-                {houses.map((house) => (
-                  <Button 
-                    key={house.name}
-                    variant="outline-primary"
-                    className="house-select-btn m-2" 
-                    onClick={() => selectUserHouse(house.name)}
-                  >
-                    <span className="house-emoji me-2">{house.emoji}</span>
-                    {house.name}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          ) : pointsEarned > 0 ? (
-            <div className="text-center points-earned-container">
-              <div className="success-icon mb-3">🏆</div>
-              <h4>Congratulations!</h4>
-              <p className="points-earned">You earned <span>{pointsEarned} points</span> for {userHouse}!</p>
-              <Button variant="primary" onClick={closeActivityModal}>Continue</Button>
-            </div>
-          ) : (
-            <div className="activity-selection">
-              <h5 className="mb-3">Choose an activity to earn points for {userHouse}:</h5>
-              
-              <Form.Select 
-                className="mb-3"
-                value={selectedActivity} 
-                onChange={(e) => setSelectedActivity(e.target.value)}
+        <Modal.Body className="sorting-modal-body">
+          <p className="text-center mb-4">Choose your Hogwarts house to begin earning points!</p>
+          
+          <div className="house-selection">
+            {houses.map((house, index) => (
+              <div 
+                key={index} 
+                className={`house-option ${userHouse === house.name ? 'selected' : ''}`}
+                onClick={() => chooseHouse(house.name)}
               >
-                {activities.map((activity) => (
-                  <option key={activity.id} value={activity.id}>
-                    {activity.name} ({activity.points} points)
-                  </option>
-                ))}
-              </Form.Select>
-              
-              <div className="activity-details p-3 rounded mb-4">
-                <h6>
-                  {activities.find(a => a.id === selectedActivity)?.name}
-                </h6>
-                <p className="mb-0">
-                  {activities.find(a => a.id === selectedActivity)?.description}
-                </p>
+                <div className="house-emoji">{house.emoji}</div>
+                <h5>{house.name}</h5>
+                <p>{house.trait}</p>
               </div>
+            ))}
+          </div>
+        </Modal.Body>
+      </Modal>
+      
+      {/* Points Modal */}
+      <Modal show={showPointsModal} onHide={() => {
+        setShowPointsModal(false);
+        setActivityCompleted(false);
+        setPointsEarned(0);
+      }} centered>
+        <Modal.Header closeButton className="points-modal-header">
+          <Modal.Title>Earn Points for {userHouse}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="points-modal-body">
+          {!activityCompleted ? (
+            <>
+              <p className="text-center mb-4">Complete magical activities to earn points for your house!</p>
               
-              {selectedActivity === 'quiz' && (
-                <div className="quiz-preview">
-                  <p className="sample-question mb-2">Sample question:</p>
-                  <p className="fw-bold mb-1">{quizQuestions[0].question}</p>
-                  <ul className="quiz-options ps-3">
-                    {quizQuestions[0].options.map((option, idx) => (
-                      <li key={idx}>{option}</li>
-                    ))}
-                  </ul>
-                  <p className="quiz-note">Complete the full quiz to earn points for your house!</p>
+              <div className="activity-list">
+                <div className="activity-item" onClick={() => completeActivity(5)}>
+                  <div className="activity-icon">📝</div>
+                  <div className="activity-details">
+                    <h5>Take a magical quiz</h5>
+                    <p>Test your Harry Potter knowledge</p>
+                    <span className="points-value">+5 points</span>
+                  </div>
                 </div>
-              )}
-              
-              <div className="d-flex justify-content-between mt-4">
-                <Button 
-                  variant="outline-secondary" 
-                  onClick={() => setUserHouse('')}
-                >
-                  Change House
-                </Button>
-                <Button 
-                  variant="primary" 
-                  onClick={completeActivity}
-                >
-                  Complete Activity
-                </Button>
+                
+                <div className="activity-item" onClick={() => completeActivity(10)}>
+                  <div className="activity-icon">🪄</div>
+                  <div className="activity-details">
+                    <h5>Master a spell</h5>
+                    <p>Learn and practice a new incantation</p>
+                    <span className="points-value">+10 points</span>
+                  </div>
+                </div>
+                
+                <div className="activity-item" onClick={() => completeActivity(15)}>
+                  <div className="activity-icon">🧪</div>
+                  <div className="activity-details">
+                    <h5>Brew a potion</h5>
+                    <p>Follow the instructions to create a magical concoction</p>
+                    <span className="points-value">+15 points</span>
+                  </div>
+                </div>
               </div>
+            </>
+          ) : (
+            <div className="points-earned text-center">
+              <div className="points-badge">+{pointsEarned}</div>
+              <h4>Points awarded to {userHouse}!</h4>
+              <p>Well done! Your house has earned {pointsEarned} points.</p>
             </div>
           )}
         </Modal.Body>
       </Modal>
       
-      {/* Historical Data Modal */}
-      <Modal show={showHistoryModal} onHide={() => setShowHistoryModal(false)} centered size="lg" className="history-modal">
-        <Modal.Header closeButton className="border-0">
-          <Modal.Title>House Points Historical Data</Modal.Title>
+      {/* History Modal */}
+      <Modal 
+        show={showHistoryModal} 
+        onHide={() => setShowHistoryModal(false)} 
+        centered
+        size="lg"
+      >
+        <Modal.Header closeButton className="history-modal-header">
+          <Modal.Title>House Points History</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Tab.Container defaultActiveKey="table">
+        <Modal.Body className="history-modal-body">
+          <Tab.Container defaultActiveKey="monthly">
             <Nav variant="tabs" className="mb-4">
               <Nav.Item>
-                <Nav.Link eventKey="table">Monthly Data</Nav.Link>
+                <Nav.Link eventKey="monthly">Monthly Progress</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="winners">House Cup Winners</Nav.Link>
+                <Nav.Link eventKey="past-winners">Past Winners</Nav.Link>
               </Nav.Item>
             </Nav>
             
             <Tab.Content>
-              <Tab.Pane eventKey="table">
-                <div className="table-responsive">
-                  <table className="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Month</th>
-                        <th>Ravenclaw</th>
-                        <th>Gryffindor</th>
-                        <th>Slytherin</th>
-                        <th>Hufflepuff</th>
-                        <th>Winner</th>
+              <Tab.Pane eventKey="monthly">
+                <table className="history-table">
+                  <thead>
+                    <tr>
+                      <th>House</th>
+                      {houses[0].history.map((entry, i) => (
+                        <th key={i}>{entry.month}</th>
+                      ))}
+                      <th>Current</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {houses.map((house, index) => (
+                      <tr key={index} className={`house-${house.name.toLowerCase()}-row`}>
+                        <td className="house-name">
+                          <span className="house-emoji">{house.emoji}</span> {house.name}
+                        </td>
+                        {house.history.map((entry, i) => (
+                          <td key={i}>{entry.points}</td>
+                        ))}
+                        <td className="current-points">{house.points}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {historicalData.map((data, index) => {
-                        const scores = { 
-                          Ravenclaw: data.Ravenclaw, 
-                          Gryffindor: data.Gryffindor, 
-                          Slytherin: data.Slytherin, 
-                          Hufflepuff: data.Hufflepuff 
-                        };
-                        const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-                        
-                        return (
-                          <tr key={index}>
-                            <td>{data.month}</td>
-                            <td>{data.Ravenclaw}</td>
-                            <td>{data.Gryffindor}</td>
-                            <td>{data.Slytherin}</td>
-                            <td>{data.Hufflepuff}</td>
-                            <td>
-                              {houses.find(h => h.name === winner)?.emoji} {winner}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </Tab.Pane>
               
-              <Tab.Pane eventKey="winners">
-                <div className="historical-winners">
-                  <h5 className="mb-4 text-center">Annual House Cup Winners</h5>
+              <Tab.Pane eventKey="past-winners">
+                <div className="past-winners">
+                  <div className="year-winner">
+                    <div className="year">2023</div>
+                    <div className="winner">
+                      <span className="house-emoji">🦁</span> Gryffindor
+                      <span className="trophy">🏆</span>
+                    </div>
+                    <div className="points">967 points</div>
+                  </div>
                   
-                  <ListGroup>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="year">2023</span>
-                        <span className="winner-name ms-3">🦁 Gryffindor</span>
-                      </div>
-                      <Badge bg="danger" pill>964 points</Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="year">2022</span>
-                        <span className="winner-name ms-3">🐍 Slytherin</span>
-                      </div>
-                      <Badge bg="success" pill>892 points</Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="year">2021</span>
-                        <span className="winner-name ms-3">🦅 Ravenclaw</span>
-                      </div>
-                      <Badge bg="info" pill>917 points</Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="year">2020</span>
-                        <span className="winner-name ms-3">🦡 Hufflepuff</span>
-                      </div>
-                      <Badge bg="warning" pill>876 points</Badge>
-                    </ListGroup.Item>
-                    <ListGroup.Item className="d-flex justify-content-between align-items-center">
-                      <div>
-                        <span className="year">2019</span>
-                        <span className="winner-name ms-3">🐍 Slytherin</span>
-                      </div>
-                      <Badge bg="success" pill>931 points</Badge>
-                    </ListGroup.Item>
-                  </ListGroup>
+                  <div className="year-winner">
+                    <div className="year">2022</div>
+                    <div className="winner">
+                      <span className="house-emoji">🐍</span> Slytherin
+                      <span className="trophy">🏆</span>
+                    </div>
+                    <div className="points">945 points</div>
+                  </div>
+                  
+                  <div className="year-winner">
+                    <div className="year">2021</div>
+                    <div className="winner">
+                      <span className="house-emoji">🦅</span> Ravenclaw
+                      <span className="trophy">🏆</span>
+                    </div>
+                    <div className="points">978 points</div>
+                  </div>
+                  
+                  <div className="year-winner">
+                    <div className="year">2020</div>
+                    <div className="winner">
+                      <span className="house-emoji">🦡</span> Hufflepuff
+                      <span className="trophy">🏆</span>
+                    </div>
+                    <div className="points">921 points</div>
+                  </div>
                 </div>
               </Tab.Pane>
             </Tab.Content>
