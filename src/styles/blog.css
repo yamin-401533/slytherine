@@ -438,8 +438,9 @@
 .section-divider {
   text-align: center;
   position: relative;
-  padding: 30px 0;
-  margin: 60px 0;
+  padding: 1px;
+  margin-top: 62px;
+  margin-bottom: 1px;
 }
 
 .section-divider:before {
@@ -468,6 +469,7 @@
   font-size: 1.5rem;
   box-shadow: var(--shadow-md);
   border: 3px solid rgba(196, 160, 36, 0.3);
+  color: #c4a024  !important;
 }
 
 /* Section Header Styling */
@@ -1370,6 +1372,7 @@
 .registration-form-container {
   display: flex;
   gap: 20px;
+  color: var(--text-color);
 }
 
 .registration-form-container .event-details {
@@ -1401,7 +1404,7 @@
 .registration-form-container .form-control {
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--text-color);
+  color: #c4a024 !important;
   padding: 10px 15px;
   border-radius: var(--border-radius);
   font-size: 0.9rem;
@@ -1418,9 +1421,9 @@
 }
 
 .registration-form-container .btn-primary {
-  background-color: var(--secondary-color);
+  background-color: var(--accent-color) !important;
   border: none;
-  color: white;
+  color: var(--dark-text);
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
@@ -1429,7 +1432,7 @@
 }
 
 .registration-form-container .btn-primary:hover {
-  background-color: var(--hover-color);
+  background-color: var(--accent-color);
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
 }
@@ -1483,3 +1486,10 @@
 .confirmation-item .value {
   opacity: 0.8;
 }
+
+.decorated-text {
+  color: #c4a024 !important;
+  font-weight: bold;
+
+}
+
