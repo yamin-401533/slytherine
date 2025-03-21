@@ -113,7 +113,7 @@ const eventsData = [
     date: new Date("2025-04-15T19:00:00"),
     location: "AMC Theaters - Los Angeles",
     category: "Special Event",
-    image: require('../assets/images/img-game1.jpg'),
+    image: require('../assets/images/blog8.jpg'),
     description: "Join original cast members for a special Q&A session celebrating 25 years since the Chamber of Secrets first opened.",
     capacity: 120,
     registered: 87,
@@ -127,7 +127,7 @@ const eventsData = [
     date: new Date("2025-05-02T18:30:00"),
     location: "Universal Studios",
     category: "Fan Event",
-    image: require('../assets/images/img-game2.jpg'),
+    image: require('../assets/images/blog9.jpg'),
     description: "Show off your best wizarding attire and compete for magical prizes! Categories include House Pride, Magical Creatures, and Fantastic Props.",
     capacity: 200,
     registered: 143,
@@ -141,7 +141,7 @@ const eventsData = [
     date: new Date("2025-06-20T14:00:00"),
     location: "Wizarding World - Orlando",
     category: "Workshop",
-    image: require('../assets/images/img-game3.jpg'),
+    image: require('../assets/images/blog10.jpg'),
     description: "Learn proper wand techniques and dueling etiquette in this hands-on workshop with prop masters from the films.",
     capacity: 50,
     registered: 35,
@@ -155,7 +155,7 @@ const eventsData = [
     date: new Date("2025-03-05T19:30:00"),
     location: "Various Theaters Nationwide",
     category: "Trivia",
-    image: require('../assets/images/img-game4.jpg'),
+    image: require('../assets/images/blog7.jpg'),
     description: "Test your wizarding knowledge in this nationwide trivia competition. Teams of 4-6 compete for the House Cup and exclusive prizes.",
     capacity: 1000,
     registered: 876,
@@ -175,7 +175,7 @@ const eventsData = [
     date: new Date("2025-02-14T20:00:00"),
     location: "Warner Bros. Studio Tour",
     category: "Workshop",
-    image: require('../assets/images/img-game5.jpg'),
+    image: require('../assets/images/blog11.jpg'),
     description: "Adult fans can enjoy this 21+ event featuring themed cocktails inspired by famous potions from the wizarding world.",
     capacity: 80,
     registered: 80,
@@ -194,7 +194,7 @@ const eventsData = [
     date: new Date("2025-01-30T12:00:00"),
     location: "Regal Cinemas",
     category: "Marathon",
-    image: require('../assets/images/img-game6.jpg'),
+    image: require('../assets/images/blog12.jpg'),
     description: "Experience all three Fantastic Beasts films back-to-back in this special marathon event. Includes exclusive merchandise and collectibles.",
     capacity: 150,
     registered: 150,
@@ -592,7 +592,7 @@ const AppBlog = () => {
                             <div className="event-price">{event.price}</div>
                             <div className="card-actions">
                               <Button variant="primary" className="btn-register" onClick={() => handleEventShow(event)} disabled={event.registered >= event.capacity}>
-                                {event.registered >= event.capacity ? 'Sold Out' : 'Register Now'} <i className="fas fa-ticket-alt"></i>
+                                {event.registered >= event.capacity ? 'Sold Out' : 'Get Tickets'} <i className="fas fa-ticket-alt"></i>
                               </Button>
                             </div>
                           </Card.Body>
@@ -679,7 +679,7 @@ const AppBlog = () => {
                       <Card.Title>{movie.title}</Card.Title>
                       <Card.Text>{movie.description}</Card.Text>
                       <div className="card-actions">
-                        <a href={movie.link} className="btn btn-primary">Get Tickets <i className="fas fa-ticket-alt"></i></a>
+                        <a href="#events" className="btn btn-primary">Get Tickets <i className="fas fa-ticket-alt"></i></a>
                         <Button variant="outline-secondary" className="btn-trailer" onClick={() => setSelectedMovie(movie)}>
                           <i className="fas fa-film"></i> Trailer
                         </Button>
