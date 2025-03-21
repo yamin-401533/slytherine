@@ -488,12 +488,20 @@ const AppBlog = () => {
               </div>
               <div className="card-body-content">
                 <p className="content-text">
-                  Warner Bros. Pictures proudly presents the complete <strong>Harry Potter</strong> film collection returning to theaters worldwide as part of the "Back to Hogwarts" celebration.
+                  Warner Bros. Pictures proudly presents the complete <strong className="decorated-text">Harry Potter</strong> film collection returning to theaters worldwide as part of the <strong className="decorated-text">Back to Hogwarts</strong> celebration.
+                
+ Experience all eight iconic films, from <strong className="decorated-text">Harry Potter and the Sorcerer's Stone</strong>  to <strong className="decorated-text">Harry Potter and the Deathly Hallows - Part 2</strong> remastered and enhanced for modern cinema standards.
+                </p>
+                <p className="content-text">
+                  Beginning October 11, 2025, theaters nationwide will offer these beloved classics in multiple formats, including standard digital projection, IMAX, Dolby Cinema, and select 3D screenings. Each theatrical release will feature exclusive behind-the-scenes content and filmmaker introductions never before seen by audiences.
+
+
                 </p>
                 <div className="format-badges">
-                  {['IMAX', 'DOLBY CINEMA', 'DIGITAL', 'REAL D 3D'].map((format) => (
-                    <span key={format} className={`format-badge ${format.toLowerCase()}`}>{format}</span>
-                  ))}
+                  <span className="format-badge imax">IMAX</span>
+                  <span className="format-badge dolby">DOLBY CINEMA</span>
+                  <span className="format-badge digital">DIGITAL</span>
+                  <span className="format-badge realD">REAL D 3D</span>
                 </div>
                 <Button variant="primary" className="mt-4 btn-full">
                   Find Theaters Near You <i className="fas fa-location-arrow"></i>
@@ -525,7 +533,13 @@ const AppBlog = () => {
             </div>
           </Col>
         </Row>
-
+        <br></br>
+        <div className="section-divider">
+          <div className="divider-icon">
+            <i class="fa-brands fa-studiovinari"></i>
+          </div>
+        </div>
+        
         {/* Events Section */}
         <div className="section-header" id="events">
           <h2 className="section-title">Magical Events</h2>
@@ -631,7 +645,11 @@ const AppBlog = () => {
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>
-
+        <div className="section-divider">
+          <div className="divider-icon">
+            <i className="fas fa-hat-wizard"></i>
+          </div>
+        </div>
         {/* Movie Section */}
         <div className="section-header">
           <h2 className="section-title">Featured Screenings</h2>
