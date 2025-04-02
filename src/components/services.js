@@ -16,7 +16,7 @@ const magicalCreaturesData = [
     shortDescription: "The King of Serpents with a deadly gaze and venomous fangs",
     description: "The Basilisk, known as the King of Serpents, is a giant serpent capable of living for centuries. Its deadly gaze and venomous fangs make it one of the most feared creatures in the wizarding world. It was famously unleashed in the Chamber of Secrets by the Heir of Slytherin.",
     traits: ["Deadly Gaze", "Venomous", "Long-lived"],
-    color: "#1a472a",
+    color: "rgba(87, 61, 131, 0.95)",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const magicalCreaturesData = [
     shortDescription: "Majestic creatures with eagle front and horse hind",
     description: "Hippogriffs are majestic creatures with the front half of an eagle and the hind half of a horse. They are proud and noble, requiring proper respect. Buckbeak, a Hippogriff, played a key role in the events of the Prisoner of Azkaban.",
     traits: ["Proud", "Noble", "Loyal"],
-    color: "#2c6e49",
+    color: "rgba(55, 37, 87, 0.95)",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const magicalCreaturesData = [
     shortDescription: "One of the most dangerous dragon species",
     description: "The Hungarian Horntail is one of the most dangerous dragon species, known for its aggressive nature. With black scales, bronze horns, and a spiked tail, it posed a significant challenge to Harry Potter during the Triwizard Tournament.",
     traits: ["Aggressive", "Powerful", "Territorial"],
-    color: "#1a472a",
+    color: "rgba(89, 66, 129, 0.95)",
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ const magicalCreaturesData = [
     shortDescription: "Skeletal horses visible only to those who've witnessed death",
     description: "Thestrals are winged, skeletal horses visible only to those who have witnessed death. Despite their eerie appearance, they are gentle and loyal creatures, often used to pull the carriages at Hogwarts.",
     traits: ["Mysterious", "Gentle", "Perceptive"],
-    color: "#2c6e49",
+    color: "rgba(55, 37, 87, 0.95)",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const magicalCreaturesData = [
     shortDescription: "Peaceful resident of the Black Lake near Hogwarts",
     description: "The Giant Squid resides in the Black Lake near Hogwarts. A peaceful creature, it occasionally interacts with students and is a beloved part of the Hogwarts ecosystem.",
     traits: ["Peaceful", "Intelligent", "Aquatic"],
-    color: "#1a472a",
+    color: "rgba(87, 65, 124, 0.95)",
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ const magicalCreaturesData = [
     shortDescription: "Giant spiders capable of human speech",
     description: "Acromantulas are giant, sentient spiders capable of human speech. Bred to guard wizarding dwellings, they are highly dangerous. Aragog, an Acromantula, was raised by Rubeus Hagrid and lived in the Forbidden Forest.",
     traits: ["Sentient", "Dangerous", "Colony-dwelling"],
-    color: "#2c6e49",
+    color: "rgba(55, 37, 87, 0.95)",
   },
 ];
 
@@ -107,6 +107,7 @@ function AppServices() {
         </div>
         <h4 className="filter-title">Filter by trait:</h4>
         <div className="filter-container">
+          
           <div className="trait-filters">
             <Badge 
               className={`trait-badge ${filterTrait === null ? 'active' : ''}`} 
