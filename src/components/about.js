@@ -180,6 +180,14 @@ function AppAbout() {
                       <Button 
                         variant="primary" 
                         className="me-2"
+                        style={{
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        backgroundColor: 'rgba(228, 193, 61, 0.87)',
+                        color: 'rgba(16, 16, 32, 0.97)',
+                        fontSize: '1.1rem',
+                        padding: '0.6rem 1.1rem',
+                      }}
                         onClick={() => setShowPointsModal(true)}
                       >
                         Earn Points
@@ -187,6 +195,14 @@ function AppAbout() {
                       <Button 
                         variant="outline-secondary"
                         onClick={() => setShowSortingModal(true)}
+                        style={{
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        backgroundColor: 'rgba(228, 193, 61, 0.87)',
+                        color: 'rgba(16, 16, 32, 0.97)',
+                        fontSize: '1.1rem',
+                        padding: '0.6rem 1.1rem',
+                      }}
                       >
                         Change House
                       </Button>
@@ -278,9 +294,17 @@ function AppAbout() {
                     <Button 
                       variant="link" 
                       className="history-link ms-2"
+                      style={{
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        backgroundColor: 'rgba(228, 193, 61, 0.97)',
+                        color: 'rgba(16, 16, 32, 0.97)',
+                        fontSize: '1.1rem',
+                        padding: '0.7rem 1.3rem',
+                      }}
                       onClick={() => setShowHistoryModal(true)}
                     >
-                      <i className="fas fa-history"></i> History
+                    <i className="fas fa-history"></i> History
                     </Button>
                   </h3>
                   
